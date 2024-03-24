@@ -1,70 +1,70 @@
-import supabase from '@/lib/supabase';
+import supabase from "@/lib/supabase"
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const email = searchParams.get('email');
+    const { searchParams } = new URL(request.url)
+    const email = searchParams.get("email")
 
-  if (!email) {
-    return new Response(JSON.stringify({ error: 'Email is required' }), {
-      status: 400,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
-
-  try {
-    const res = await fetch(
-      `https://api.lemonsqueezy.com/v1/customers?filter[email]=${email}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.LEMON_SQUEEZY_KEY}`,
-          Accept: 'application/json',
-        },
-      },
-    );
-
-    const { data: foundCustomers } = await res.json();
-
-    if (foundCustomers.length === 0) {
-      return new Response(
-        JSON.stringify({ error: 'No customer found with that email' }),
-        {
-          status: 404,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+    if (!email) {
+        return new Response(JSON.stringify({ error: "Email is required" }), {
+            status: 400,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
     }
 
-    const { data: magicLink, error: authError } =
-      await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          shouldCreateUser: true,
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/videos`,
-        },
-      });
+    try {
+        const res = await fetch(
+            `https://api.lemonsqueezy.com/v1/customers?filter[email]=${email}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.LEMON_SQUEEZY_KEY}`,
+                    Accept: "application/json",
+                },
+            }
+        )
 
-    if (authError) {
-      throw new Error(authError.message);
+        const { data: foundCustomers } = await res.json()
+
+        if (foundCustomers.length === 0) {
+            return new Response(
+                JSON.stringify({ error: "No customer found with that email" }),
+                {
+                    status: 404,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+        }
+
+        const { data: magicLink, error: authError } =
+            await supabase.auth.signInWithOtp({
+                email,
+                options: {
+                    shouldCreateUser: true,
+                    emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/videos`,
+                },
+            })
+
+        if (authError) {
+            throw new Error(authError.message)
+        }
+
+        return new Response(JSON.stringify({ magicLink }), {
+            status: 200,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+    } catch (error: any) {
+        return new Response(JSON.stringify({ error: error.message }), {
+            status: 500,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
     }
-
-    return new Response(JSON.stringify({ magicLink }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
 }
 
 // YAPILACAKLAR
