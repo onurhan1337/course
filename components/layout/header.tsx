@@ -6,7 +6,7 @@ import Link from 'next/link';
 import HeaderNav, { type HeaderItem } from './nav';
 
 const HEADER_ITEMS: HeaderItem[] = [
-  { label: 'Videos', href: '/' },
+  { label: 'Videos', href: '/videos' },
   { label: 'Vault', href: '/about' },
   {
     label: 'Account',
