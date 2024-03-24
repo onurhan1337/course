@@ -33,16 +33,7 @@ const Header = async () => {
         <Image src="/logo.svg" alt="Logo" width={32} height={32} />
       </Link>
 
-      {user ? (
-        <HeaderNav items={HEADER_ITEMS} />
-      ) : (
-        <Link
-          href="/login"
-          className="text-gray-1200 hidden rounded-full bg-white px-4 py-1.5 text-sm font-medium no-underline shadow-sm hover:bg-gray-200 dark:bg-gray-200 dark:hover:bg-gray-300 md:block"
-        >
-          Login
-        </Link>
-      )}
+      {user && <HeaderNav items={HEADER_ITEMS} />}
     </header>
   );
 };

@@ -60,5 +60,9 @@ export async function updateSession(request: NextRequest) {
     response = NextResponse.redirect('/videos');
   }
 
+  if (!user && request.nextUrl.pathname !== '/') {
+    response = NextResponse.redirect('/');
+  }
+
   return response;
 }
