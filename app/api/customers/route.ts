@@ -1,8 +1,9 @@
-import supabase from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 
 const BASE_URL = 'https://course-onurhan.vercel.app';
 
 export async function GET(request: Request) {
+  const supabase = createClient();
   const { searchParams } = new URL(request.url);
   const email = searchParams.get('email');
 
