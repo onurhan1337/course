@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 
 import Header from '@/components/layout/header';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,6 +25,8 @@ export default function RootLayout({
         <main className="overflowed text-gray-1200 mx-auto my-12 max-w-[1144px] px-4 antialiased sm:my-32 md:my-[3px] md:mb-40 md:px-6">
           {children}
         </main>
+
+        <Toaster />
       </body>
     </html>
   );
