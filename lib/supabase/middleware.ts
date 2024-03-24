@@ -56,7 +56,7 @@ export async function updateSession(request: NextRequest) {
 
   const user = await supabase.auth.getUser();
 
-  if (user && request.nextUrl.pathname === '/login') {
+  if (user && request.nextUrl.pathname === '/') {
     response = NextResponse.redirect('/videos');
   }
 
