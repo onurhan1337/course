@@ -69,10 +69,3 @@ export async function GET(request: Request) {
     });
   }
 }
-
-// YAPILACAKLAR
-// 1. magic link ile giriş yapmayı test et
-// 2. eğer sorun varsa, sorunu çöz
-// 3. eğer sorun yoksa, kullanıcı giriş yaptıktan sonra header'ı güncelle
-// 4. header'ı güncelledikten sonra sayfaları güvenli hale getirmek için gerekli adımları at
-// 5. sayfaları güvenli hale getirdikten sonra, kullanıcıların video izlemesini sağlamak MDX kurulumu yaparak başla
