@@ -27,7 +27,9 @@ const HEADER_ITEMS: HeaderItem[] = [
 const Header = async () => {
   const supabase = await createClient();
 
-  const { data } = await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   return (
     <header className="text-gray-1200 mx-auto flex max-w-[1144px] items-center justify-between px-4 py-12 antialiased md:mb-12 md:px-6">
@@ -38,7 +40,7 @@ const Header = async () => {
         <Image src="/logo.svg" alt="Logo" width={32} height={32} />
       </Link>
 
-      {data.session && <HeaderNav items={HEADER_ITEMS} />}
+      {session && <HeaderNav items={HEADER_ITEMS} />}
     </header>
   );
 };
