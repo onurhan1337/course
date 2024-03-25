@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 
@@ -14,6 +12,7 @@ export interface HeaderItem {
   label: string;
   href: string;
   children?: HeaderItem[];
+  onClick?: () => void;
 }
 
 interface HeaderItemProps {
