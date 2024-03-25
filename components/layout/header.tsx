@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 import HeaderNav, { type HeaderItem } from './nav';
 
 const HEADER_ITEMS: HeaderItem[] = [
@@ -10,17 +10,7 @@ const HEADER_ITEMS: HeaderItem[] = [
   {
     label: 'Account',
     href: '/settings',
-    children: [
-      { label: 'Settings', href: '/settings' },
-      {
-        label: 'Logout',
-        href: '/logout',
-        onClick: async () => {
-          const supabase = await createClient();
-          await supabase.auth.signOut();
-        },
-      },
-    ],
+    children: [{ label: 'Settings', href: '/settings' }],
   },
 ];
 
@@ -28,8 +18,8 @@ const Header = async () => {
   const supabase = await createClient();
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <header className="text-gray-1200 mx-auto flex max-w-[1144px] items-center justify-between px-4 py-12 antialiased md:mb-12 md:px-6">
@@ -40,7 +30,7 @@ const Header = async () => {
         <Image src="/logo.svg" alt="Logo" width={32} height={32} />
       </Link>
 
-      {session && <HeaderNav items={HEADER_ITEMS} />}
+      {user && <HeaderNav items={HEADER_ITEMS} />}
     </header>
   );
 };

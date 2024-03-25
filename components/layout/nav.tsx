@@ -7,12 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import { Fragment } from 'react';
 
 export interface HeaderItem {
   label: string;
   href: string;
   children?: HeaderItem[];
-  onClick?: () => void;
 }
 
 interface HeaderItemProps {
@@ -34,11 +34,20 @@ const HeaderNav = ({ items }: HeaderItemProps) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {item.children.map((child) => (
-                  <Link key={child.label} href={child.href}>
+                  <Fragment key={child.label}>
+                    <Link href={child.href}>
+                      <DropdownMenuItem className="group block cursor-pointer rounded-md p-2 text-gray-600 no-underline transition-all hover:bg-gray-100 hover:text-gray-800">
+                        {child.label}
+                      </DropdownMenuItem>
+                    </Link>
                     <DropdownMenuItem className="group block cursor-pointer rounded-md p-2 text-gray-600 no-underline transition-all hover:bg-gray-100 hover:text-gray-800">
-                      {child.label}
+                      <form method="POST" action="/auth/signout">
+                        <button type="submit" className="w-full text-left">
+                          Sign Out
+                        </button>
+                      </form>
                     </DropdownMenuItem>
-                  </Link>
+                  </Fragment>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
